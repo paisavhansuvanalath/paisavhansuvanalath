@@ -1,0 +1,210 @@
+ສະບານດີ ນີ້ແມ່ນ ຂັ້ນຕ່ອນໃນການວິເຄາະໂດຍໃຊ້ພາສາ Python
+ສຳມະຊິກໃນກູ່ມຂອງພວກເຮົາ
+ຫ້ອງ 2cs1 (Team JMT)
+ທ ແມັກນ້ຳ ໂສຍວິໄຊ
+ທ ໄພສະຫວັນ ສຸວັນນະລາດ
+ທ ອາໂຕ້ ພິມໄກສອນ
+ໂດຍທຳອິດເຮົາຕ້ອງ >> import library ທັງຫໝົດທາງດ້ານລຸ່ມ ແລະ ນຳຂໍ້ມູນເຂົ້າມາ
+ເຊີ່ງຈຸດປະສົງຂອງການເຮັດ ບົດວິເຄາະນີ້ຂື້ນມາ ເພື່ອມາເບີ່ງຄຸນລັກສະນະທີ່ແຕກຕ່າງຂອງຄົນທີ່ຊື່ແລະບໍ່ຊື້ ແລະ ຊອກຫາເຄື່ອງມືໃນການທຳນາຍ
+ຂໍ້ມູນເຮົາໄດ້ 
+ນຳມາຈາກ 
+UCL >> Data set created by Sakar, C.O., Polat, S.O., Katircioglu, M. et al. Neural Comput & Applic in UCI UCI Machine Learning Repository: Online Shoppers Purchasing Intention Dataset Data Set
+https://archive.ics.uci.edu/ml/datasets/Online+Shoppers+Purchasing+Intention+Dataset
+
+Kaggle >> Data set analytic by (ABHISHEK VAISHNAV) https://www.kaggle.com/abhishekvaishnav/eda-and-prediction 
+ແລະໄດ້ນຳໃຊ້ Notebookpython ໃນການວິເຄາະແລະແກ້ໄຂ Code ແລະເຮົາໄດ້ອ້າງອີງ code ຈາກ kaggle from ABHISHEK VAISHNAV ແລະໄດ້ ແກ້ໄຂ Code 
+
+ການວິເຄາະມາທັງບາງອັນຍັງມີຂໍໍ້ຜິດພາດ ຫລື່ບົດວິເຄາະເຮົາຍັງບໍ່ທັນທີຄ່ວນ ແຕ່ເຮົາກໍ່ໄດ້ພະຍາມເຮັດໃຫ້ດີທີ່ສຸດເນື່ອງຈາກ ການແຜ່ພະຍາດໂຄວິດໃນປັດຈຸບັນເຮັດຄາກການສຶກສາໄປເລັກຫນ້ອຍ ແລະ ມີບັນຫານຳກຸ່ມເພາະເຂົາຢູ່ຕ່າງແຂວງການປຶກສາກັນກໍຍັງບໍ່ທັນດີ ຈື່ງໄດະຂໍອະໄພມາຍັງທີ່ນີ້ ແຕ່ ພວດເຮົາກະສິພະຍາຍາມເຮັດດີຂື້ນກວ່າເກົ່າ ຂອບໃຈ ອາຈານ ປ.ອ ສົມສັກ ອີນທະສອນ( Somsak Intasone) ທີສິດສອນ ແລະ ໃຫ້ຄຳແນະນຳ
+# This Python 3 environment comes with many helpful analytics libraries installed
+# It is defined by the kaggle/python Docker image: https://github.com/kaggle/docker-python
+# For example, here's several helpful packages to load
+
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
+
+# Input data files are available in the read-only "../input/" directory
+# For example, running this (by clicking run or pressing Shift+Enter) will list all files under the input directory
+import os
+for dirname, _, filenames in os.walk('/kaggle/input'):
+    for filename in filenames:
+        print(os.path.join(dirname, filename))
+
+!pip install imbalanced-learn
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+data= pd.read_csv('c:/online_shoppers_intention.csv')
+
+data.head()
+
+sns.heatmap(data.isnull(), cmap='bone')
+
+#No Null Values 
+data.info()
+
+data.describe()
+
+#Exploratory Data Analysis
+plt.figure(figsize = (12,7))
+sns.heatmap(data.corr(), annot = True, cmap='coolwarm')
+plt.title('Data Correlation')
+
+sns.countplot(x = data['Revenue'], palette='coolwarm')
+plt.title('Revenue')
+
+sns.set_style('darkgrid')
+plt.figure(figsize = (20,10))
+plt.subplot(1,2,1)
+plt.title('Distribution of number of pages of this administrative type user visited ')
+sns.countplot( x = data['Administrative'])
+plt.subplot(1,2,2)
+plt.title('Distribution of number of pages of this administrative type user visited with Respect to Revenue')
+sns.countplot(x= 'Administrative', hue = 'Revenue', data= data, palette='coolwarm')
+plt.show()
+
+sns.histplot(data['Administrative_Duration'], bins = [0,100,200,300,400,500],color='Black')
+plt.title('This is the distribution of amount of time spent on Administrative pages.')
+plt.show()
+
+plt.figure(figsize = (20,10))
+plt.subplot(1,2,1)
+plt.title('Distribution of number of pages of this informational type user visited ')
+sns.countplot( x = data['Informational'])
+plt.subplot(1,2,2)
+plt.title('Distribution of number of pages of this administrative type user visited with Respect to Revenue')
+sns.countplot(x= 'Informational', hue = 'Revenue', data = data, palette='coolwarm')
+plt.show()
+
+sns.histplot(data['Informational_Duration'], bins = [0,100,200,300,400,500],color='Black')
+plt.title('This is the distribution of amount of time spent on Informational pages.')
+plt.show()
+
+continous_clm = ['ProductRelated','ProductRelated_Duration', 'BounceRates', 'ExitRates' ,'PageValues' ]
+for i in continous_clm:
+        plt.figure(figsize=(7,7))
+        sns.histplot(data[i], color='black')
+        plt.title('Distribution of {}'.format(i))
+        plt.show()
+        
+ plt.figure(figsize = (15,7))
+plt.subplot(1,2,1)
+plt.title('Distribution of people visited by months ')
+plt.pie(x = data['Month'].value_counts(),
+       labels = ['May', 'Nov', 'Mar', 'Dec', 'Oct', 'Sep', 'Aug', 'Jul', 'June', 'Feb'],
+       autopct='%.2f',
+       colors=['#ff9999','#66b3ff','#99ff99','#ffcc99'],
+       shadow = True,
+       explode = (0.1,0.1,0.1,0,0,0,0,0,0,0))       
+plt.subplot(1,2,2)
+plt.title('Distribution of people visited by months with respect to Revenue')
+sns.countplot(x= 'Month', hue = 'Revenue', data = data, palette='Spectral_r')
+plt.show()
+
+plt.figure(figsize = (15,7))
+plt.subplot(1,2,1)
+plt.title('Distribution of people visited by Operating System ')
+sns.countplot(x = data['OperatingSystems'] , palette='hot')
+plt.subplot(1,2,2)
+plt.title('Distribution of people visited by Operating System with respect to Revenue')
+sns.countplot(x= 'OperatingSystems', hue = 'Revenue', data = data, palette='Spectral')
+plt.show()
+
+plt.figure(figsize = (15,7))
+plt.subplot(1,2,1)
+plt.title('Distribution of people visited by Browser')
+sns.countplot(x = data['Browser'] , palette='hot')
+plt.subplot(1,2,2)
+plt.title('Distribution of people visited by Browser with respect to Revenue')
+sns.countplot(x= 'Browser', hue = 'Revenue', data = data, palette='Spectral')
+plt.show()
+
+plt.figure(figsize = (15,7))
+plt.subplot(1,2,1)
+plt.title('Distribution of people visited by Region')
+sns.countplot(x = data['Region'] , palette='hot')
+plt.subplot(1,2,2)
+plt.title('Distribution of people visited by Region with respect to Revenue')
+sns.countplot(x= 'Region', hue = 'Revenue', data = data, palette='Spectral')
+plt.show()
+       
+ plt.figure(figsize = (15,7))
+plt.subplot(1,2,1)
+plt.title('Distribution of people visited by Traffic Type')
+sns.countplot(x = data['TrafficType'] , palette='hot')      
+plt.subplot(1,2,2)
+plt.title('Distribution of people visited by Trafffic Type with respect to Revenue')
+sns.countplot(x= 'TrafficType', hue = 'Revenue', data = data, palette='Spectral')
+plt.show()
+
+plt.figure(figsize = (15,7))
+plt.subplot(1,2,1)
+plt.title('Visitor Types ')
+plt.pie(x = data['VisitorType'].value_counts(),
+       labels =['Returning_Visitor', 'New_Visitor', 'Other'] ,
+       autopct='%.2f',
+       colors=['#ff9999','#66b3ff','#99ff99'],
+       shadow = True,
+       explode = (0.1,0.1,0.1))     
+plt.subplot(1,2,2)
+plt.title('Visitor Type with respect to Revenue')
+sns.countplot(x= 'VisitorType', hue = 'Revenue', data = data, palette='Spectral_r')
+plt.show()
+
+plt.figure(figsize = (7,7))
+plt.title('Weekend Vs Revenue')
+sns.countplot(x= 'Weekend', hue = 'Revenue', data = data, palette='Spectral_r')
+plt.show()
+
+#One Hot Encoding with all Categorical Values
+data['Revenue'] = data['Revenue'].astype(int)
+data['Revenue'].value_counts()
+
+data['Weekend'] = data['Weekend'].astype(int)
+data['Weekend'].value_counts()
+
+data = pd.get_dummies(data = data, columns=['Month', 'VisitorType'], drop_first=True)
+data.shape
+
+#Data is ready.. now lets split it and perform oversampling on our data as our ratio of True:False is less for revenue.
+from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import RandomOverSampler
+x = data.drop(columns='Revenue')
+y = data['Revenue']
+os = RandomOverSampler()
+x_oversample,y_oversample = os.fit_resample(x,y)
+print(x_oversample.shape)
+print(y_oversample.shape)
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(x_oversample,y_oversample,test_size=0.30 , random_state=42)
+print(x_train.shape)
+print(y_train.shape)
+print(x_test.shape)
+print(y_test.shape)
+
+#Training Our Model
+#Random Forest Classifier
+from sklearn.ensemble import RandomForestClassifier
+rfc = RandomForestClassifier()
+rfc.fit(x_train,y_train)
+y_predict = rfc.predict(x_test)
+y_predict
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test,y_predict )
+
+score_rfc = rfc.score(x_test,y_test)
+score_rfc
+
+#K Nearest Neighbours
+from sklearn.neighbors import KNeighborsClassifier
+KNN = KNeighborsClassifier(n_neighbors=2)
+KNN.fit(x_train, y_train)
+y_predict_KNN = KNN.predict(x_test)
+y_predict_KNN
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test,y_predict_KNN )
+
+score_KNN = KNN.score(x_test,y_test)
+score_KNN
+
